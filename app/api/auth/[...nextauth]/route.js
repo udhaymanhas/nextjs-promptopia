@@ -16,12 +16,13 @@ const handler = NextAuth({
       try {
         // serverless -> lambda -> dynamodb
         await connectToDB();
+        console.log(profile);
         const userExists = await User.findOne({ email: profile.email });
         if (!userExists) {
           await User.create({
             email: profile.email,
             username: profile.name.replaceAll(/\s/g, "").toLowerCase(),
-            image: profile.image,
+            image: profile.picture,
           });
         }
         return true;
