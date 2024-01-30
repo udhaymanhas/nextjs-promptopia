@@ -16,7 +16,7 @@ const handler = NextAuth({
       try {
         // serverless -> lambda -> dynamodb
         await connectToDB();
-        console.log(profile);
+        // console.log(profile);
         const userExists = await User.findOne({ email: profile.email });
         if (!userExists) {
           await User.create({
@@ -38,6 +38,8 @@ const handler = NextAuth({
       });
 
       session.user.id = sessionUser._id.toString();
+
+      console.log("Session: ", session);
 
       return session;
     },
